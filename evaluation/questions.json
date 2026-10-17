@@ -1,0 +1,7 @@
+[
+  {"question": "How do I define a POST endpoint in FastAPI?", "expected_status": "answered", "expected_terms": ["post", "endpoint"]},
+  {"question": "How does Pydantic validate request bodies?", "expected_status": "answered", "expected_terms": ["model", "validation"]},
+  {"question": "How does LangGraph route to a fallback after retries?", "expected_status": "answered", "expected_terms": ["retry", "fallback"]},
+  {"question": "What does chunk overlap do in vector retrieval?", "expected_status": "answered", "expected_terms": ["overlap", "chunk"]},
+  {"question": "What is the current price of a specific laptop model?", "expected_status": "insufficient_context", "expected_terms": []}
+]

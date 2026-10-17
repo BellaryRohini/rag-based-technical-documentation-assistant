@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f6f5f0" />
+  <title>Margin — Documentation workspace</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#ask" aria-label="Margin home">
+        <span class="brand-mark"><span></span><span></span><span></span></span>
+        <span class="brand-name">margin<span class="brand-period">.</span></span>
+      </a>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="side-nav" aria-label="Main navigation">
+        <button class="nav-item active" data-view="ask"><span class="nav-icon">⌕</span><span>Ask</span><span class="nav-shortcut">↵</span></button>
+        <button class="nav-item" data-view="library"><span class="nav-icon">▤</span><span>Library</span><span class="nav-count" id="sidebar-doc-count">—</span></button>
+        <button class="nav-item" data-view="add"><span class="nav-icon">＋</span><span>Add documents</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="side-note-icon">✳</div>
+        <p class="side-note-title">Answers with context.</p>
+        <p class="side-note-copy">Responses are based on the documents in your library. Check the sources before you act.</p>
+        <div class="connection-row"><span class="status-dot" id="connection-dot"></span><span id="connection-label">Checking connection</span></div>
+      </div>
+      <div class="sidebar-footer"><span>PRIVATE WORKSPACE</span><span class="footer-version">LOCAL · 01</span></div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div class="breadcrumbs"><span>Workspace</span><span class="crumb-slash">/</span><span id="breadcrumb-current">Ask</span></div>
+        <div class="topbar-right"><span class="local-pill"><span class="status-dot"></span> Running locally</span><button class="avatar" title="Local workspace">R</button></div>
+      </header>
+
+      <section class="view active" id="view-ask">
+        <div class="page-wrap ask-wrap">
+          <div class="eyebrow"><span class="eyebrow-line"></span> YOUR DOCUMENTATION, IN ONE PLACE</div>
+          <h1>Good questions<br /><em>start here.</em></h1>
+          <p class="page-intro">Ask something about your saved documents. Get a clear answer, with the passages it came from.</p>
+
+          <form id="question-form" class="ask-composer">
+            <label class="sr-only" for="question-input">Your question</label>
+            <textarea id="question-input" rows="3" maxlength="2000" placeholder="What would you like to understand?" required></textarea>
+            <div class="composer-bottom"><span class="composer-hint"><span class="tiny-spark">✳</span> Answers use your indexed library</span><button type="submit" class="button button-dark" id="ask-button">Ask question <span aria-hidden="true">↗</span></button></div>
+          </form>
+
+          <div class="suggestion-heading"><span>NOT SURE WHERE TO START?</span><span class="suggestion-rule"></span></div>
+          <div class="suggestions">
+            <button class="suggestion-card" data-question="How does a LangGraph StateGraph work?"><span class="suggestion-icon lavender">⌘</span><span class="suggestion-copy"><strong>Understand a concept</strong><small>How does a StateGraph work?</small></span><span class="suggestion-arrow">↗</span></button>
+            <button class="suggestion-card" data-question="How do I validate request data with Pydantic?"><span class="suggestion-icon peach">⌁</span><span class="suggestion-copy"><strong>Find an implementation detail</strong><small>How do I validate request data?</small></span><span class="suggestion-arrow">↗</span></button>
+            <button class="suggestion-card" data-question="What should I check when retrieval returns irrelevant results?"><span class="suggestion-icon sage">⌖</span><span class="suggestion-copy"><strong>Troubleshoot an issue</strong><small>What if retrieval is irrelevant?</small></span><span class="suggestion-arrow">↗</span></button>
+          </div>
+
+          <section class="answer-panel hidden" id="answer-panel" aria-live="polite">
+            <div class="answer-topline"><div><span class="answer-kicker">RESPONSE</span><span id="answer-status" class="answer-status">Grounded in your library</span></div><button class="text-button" id="clear-answer" type="button">Clear <span>×</span></button></div>
+            <div class="asked-question" id="asked-question"></div>
+            <div class="answer-body" id="answer-body"></div>
+            <div class="sources-section"><div class="sources-heading"><span>REFERENCES</span><span id="source-count" class="source-count">0 sources</span></div><div id="source-list" class="source-list"></div></div>
+            <div class="feedback-row"><span>Was this useful?</span><button class="feedback-button" data-rating="up" type="button" aria-label="Helpful answer">↑ <span>Yes</span></button><button class="feedback-button" data-rating="down" type="button" aria-label="Unhelpful answer">↓ <span>Not quite</span></button><span class="feedback-message" id="feedback-message"></span></div>
+          </section>
+          <div class="inline-message hidden" id="ask-message" role="status"></div>
+          <div class="ask-footnote"><span class="tiny-lock">◈</span> Your library is stored locally. Questions and matching passages are sent to Gemini to write answers.</div>
+        </div>
+      </section>
+
+      <section class="view" id="view-library">
+        <div class="page-wrap standard-wrap">
+          <div class="eyebrow"><span class="eyebrow-line"></span> YOUR SOURCE MATERIAL</div>
+          <div class="page-title-row"><div><h1 class="standard-title">The library<span class="title-period">.</span></h1><p class="page-intro">Documents available to search and ask questions about.</p></div><button class="button button-dark" data-go="add">＋ Add documents</button></div>
+          <div class="library-summary"><div><span class="summary-label">SAVED DOCUMENTS</span><strong id="library-count">—</strong></div><div><span class="summary-label">SUPPORTED FORMATS</span><strong class="format-value">MD <i>·</i> TXT <i>·</i> HTML</strong></div><div><span class="summary-label">MAX FILE SIZE</span><strong>2 MB <small>per file</small></strong></div></div>
+          <div class="section-heading-row"><h2>All documents</h2><button class="text-button" id="refresh-documents">Refresh list ↻</button></div>
+          <div class="document-list" id="document-list"><div class="loading-row">Loading your library…</div></div>
+          <div class="library-tip"><span class="tip-symbol">i</span><p><strong>One useful thing to know</strong><br />Uploads and public pages are indexed automatically. Rebuild only after you manually change files inside the documents folder.</p></div>
+          <div class="inline-message hidden" id="library-message" role="status"></div>
+        </div>
+      </section>
+
+      <section class="view" id="view-add">
+        <div class="page-wrap standard-wrap add-wrap">
+          <div class="eyebrow"><span class="eyebrow-line"></span> GROW YOUR LIBRARY</div>
+          <h1 class="standard-title">Bring your sources<span class="title-period">.</span></h1>
+          <p class="page-intro">Add the material you want to ask about. Choose files from your computer or paste a public documentation link.</p>
+
+          <div class="steps-strip"><div class="step-item current"><span class="step-number">01</span><span><strong>Add sources</strong><small>Choose files or links</small></span></div><span class="step-connector"></span><div class="step-item"><span class="step-number">02</span><span><strong>Library ready</strong><small>Sources indexed</small></span></div><span class="step-connector"></span><div class="step-item"><span class="step-number">03</span><span><strong>Ask a question</strong><small>Check the references</small></span></div></div>
+
+          <div class="ingest-grid">
+            <section class="ingest-card">
+              <div class="card-heading"><span class="card-icon file-icon">↥</span><div><h2>Upload files</h2><p>For notes and documentation saved on your computer.</p></div></div>
+              <form id="upload-form">
+                <label class="drop-zone" id="drop-zone" for="file-input"><span class="upload-art">↥</span><strong>Choose files to upload</strong><span>or drag them into this area</span><small>Markdown, text or HTML · up to 2 MB each</small><input id="file-input" type="file" accept=".md,.txt,.html,text/markdown,text/plain,text/html" multiple /></label>
+                <div class="selected-files hidden" id="selected-files"></div>
+                <div class="form-footer"><span class="form-note">Your files are saved locally.</span><button class="button button-dark" type="submit" id="upload-button">Upload files <span>↗</span></button></div>
+              </form>
+            </section>
+            <section class="ingest-card">
+              <div class="card-heading"><span class="card-icon link-icon">↗</span><div><h2>Add a web page</h2><p>For public documentation pages that are accessible without signing in.</p></div></div>
+              <form id="url-form">
+                <label for="url-input" class="field-label">DOCUMENTATION URL</label>
+                <input id="url-input" class="text-input" type="url" placeholder="https://docs.example.com/guide" required />
+                <p class="field-help">Use one complete link at a time. Pages behind a login may not be readable.</p>
+                <div class="url-example"><span class="example-dot"></span><span>Example: a public API guide or setup page</span></div>
+                <div class="form-footer url-footer"><span class="form-note">Only add sources you trust.</span><button class="button button-dark" type="submit" id="url-button">Add web page <span>↗</span></button></div>
+              </form>
+            </section>
+          </div>
+
+          <section class="build-card"><div class="build-icon">✳</div><div class="build-copy"><h2>Changed files outside this page?</h2><p>Uploads and public pages are indexed automatically. Use this only if you manually edited or copied files into <code>data/documents</code>.</p><ol><li>Save your updated files in the documents folder.</li><li>Select <strong>Rebuild library</strong> and wait for the confirmation.</li><li>Go to Ask and try a question about the updated material.</li></ol></div><button class="button button-accent" id="build-index-button" type="button">Rebuild library <span>↗</span></button></section>
+          <div class="inline-message hidden" id="ingest-message" role="status"></div>
+        </div>
+      </section>
+
+      <footer class="app-footer"><span>margin<span class="brand-period">.</span> <span class="footer-muted">A quieter way to work with documentation.</span></span><a href="/docs" target="_blank" rel="noreferrer">API reference ↗</a></footer>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="/static/app.js" defer></script>
+</body>
+</html>
